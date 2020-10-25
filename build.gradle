@@ -1,6 +1,7 @@
 plugins {
-    id "com.github.johnrengelman.shadow" version "6.0.0"
-    id "io.micronaut.application" version '1.0.5'
+    id 'com.github.johnrengelman.shadow' version '6.0.0'
+    id 'io.micronaut.application' version '1.0.5'
+    id 'com.diffplug.spotless' version "5.7.0"
 }
 
 version "0.1"
@@ -9,6 +10,9 @@ group "com.kota"
 repositories {
     mavenCentral()
     jcenter()
+    maven {
+        url "https://plugins.gradle.org/m2/"
+    }
 }
 
 micronaut {
@@ -21,19 +25,43 @@ micronaut {
 }
 
 dependencies {
-    annotationProcessor("io.micronaut.openapi:micronaut-openapi")
-    implementation("io.micronaut:micronaut-validation")
-    implementation("io.micronaut:micronaut-runtime")
-    implementation("javax.annotation:javax.annotation-api")
-    implementation("io.micronaut:micronaut-http-client")
-    implementation("io.swagger.core.v3:swagger-annotations")
-    runtimeOnly("ch.qos.logback:logback-classic")
+    annotationProcessor 'io.micronaut.openapi:micronaut-openapi'
+    implementation 'io.micronaut:micronaut-validation'
+    implementation 'io.micronaut:micronaut-runtime'
+    implementation 'javax.annotation:javax.annotation-api'
+    implementation 'io.micronaut:micronaut-http-client'
+    implementation 'io.swagger.core.v3:swagger-annotations'
+
+    implementation 'com.agorapulse:micronaut-bigquery:0.2.5'
+    implementation 'com.google.cloud:google-cloud-bigquery:1.123.2'
+
+    runtimeOnly 'ch.qos.logback:logback-classic'
+
+    testImplementation 'com.agorapulse:micronaut-bigquery-mock:0.2.5'
+    testImplementation 'io.micronaut.sql:micronaut-jdbc-tomcat:3.2.0'
+    testImplementation 'io.micronaut.configuration:jdbc-tomcat:1.0.0.RC2'
+    testImplementation 'org.postgresql:postgresql:42.2.9'
+    testImplementation 'org.testcontainers:spock:1.14.3'
+    testImplementation 'org.testcontainers:postgresql:1.14.3'
 }
 
-mainClassName = "com.kota.Application"
+mainClassName = "com.kota.campaigns.service.Application"
 java {
     sourceCompatibility = JavaVersion.toVersion('14')
     targetCompatibility = JavaVersion.toVersion('14')
+}
+tasks.withType(JavaCompile) {
+    options.compilerArgs += "--enable-preview"
+}
+tasks.withType(Test) {
+    jvmArgs += "--enable-preview"
+}
+tasks.withType(JavaExec) {
+    jvmArgs += "--enable-preview"
+}
+
+run {
+    environment 'GOOGLE_APPLICATION_CREDENTIALS', file('campaigns-434f0-7976fe04aed5').absolutePath
 }
 
 

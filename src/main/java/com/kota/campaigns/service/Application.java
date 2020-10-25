@@ -1,4 +1,4 @@
-package com.kota;
+package com.kota.campaigns.service;
 
 import io.micronaut.runtime.Micronaut;
 import io.swagger.v3.oas.annotations.*;
