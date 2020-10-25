@@ -1,2 +1,2 @@
 # campaigns
-Campaigns service
+Campaigns query service
