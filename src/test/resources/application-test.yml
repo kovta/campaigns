@@ -1,6 +1,6 @@
 micronaut:
   application.name: campaigns
-  server.port: 8085
+  server.port: -1
 
 bq:
   schema: campaigns

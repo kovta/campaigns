@@ -41,8 +41,9 @@ dependencies {
     testImplementation 'io.micronaut.sql:micronaut-jdbc-tomcat:3.2.0'
     testImplementation 'io.micronaut.configuration:jdbc-tomcat:1.0.0.RC2'
     testImplementation 'org.postgresql:postgresql:42.2.9'
-    testImplementation 'org.testcontainers:spock:1.14.3'
-    testImplementation 'org.testcontainers:postgresql:1.14.3'
+    testImplementation 'org.testcontainers:spock:1.15.0-rc2'
+    testImplementation 'org.testcontainers:postgresql:1.15.0-rc2'
+    testImplementation 'org.testcontainers:junit-jupiter:1.15.0-rc2'
 }
 
 mainClassName = "com.kota.campaigns.service.Application"
@@ -58,6 +59,12 @@ tasks.withType(Test) {
 }
 tasks.withType(JavaExec) {
     jvmArgs += "--enable-preview"
+}
+
+spotless {
+    java {
+        googleJavaFormat()
+    }
 }
 
 run {
