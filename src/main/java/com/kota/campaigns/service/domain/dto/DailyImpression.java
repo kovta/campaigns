@@ -1,6 +1,7 @@
 package com.kota.campaigns.service.domain.dto;
 
 import com.agorapulse.micronaut.bigquery.RowResult;
+import io.micronaut.core.annotation.Introspected;
 import java.time.LocalDate;
 import java.time.ZoneId;
 

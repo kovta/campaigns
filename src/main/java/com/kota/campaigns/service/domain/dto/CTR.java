@@ -1,6 +1,7 @@
 package com.kota.campaigns.service.domain.dto;
 
 import com.agorapulse.micronaut.bigquery.RowResult;
+import io.micronaut.core.annotation.Introspected;
 
 public record CTR(double ctr, String datasource, String campaign) {
 

@@ -21,11 +21,12 @@ micronaut {
     testRuntime "junit5"
     processing {
         incremental true
-        annotations "com.kota.*"
+        annotations "com.kota.campaigns.service.*"
     }
 }
 
 dependencies {
+    annotationProcessor "io.micronaut:micronaut-graal"
     annotationProcessor 'io.micronaut.openapi:micronaut-openapi'
     annotationProcessor 'io.micronaut:micronaut-inject-java'
 
@@ -39,6 +40,7 @@ dependencies {
     implementation 'javax.annotation:javax.annotation-api'
     implementation 'com.google.cloud:google-cloud-bigquery:1.123.2'
 
+    compileOnly 'org.graalvm.nativeimage:svm'
     runtimeOnly 'ch.qos.logback:logback-classic'
 
     testImplementation 'com.agorapulse:micronaut-bigquery-mock:0.2.5'
