@@ -4,8 +4,6 @@ import io.micronaut.runtime.Micronaut;
 import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.info.*;
 
-import javax.inject.Inject;
-
 @OpenAPIDefinition(info = @Info(title = "campaigns", version = "0.0"))
 public class Application {
 

@@ -1,7 +1,7 @@
 micronaut:
-  application.name: campaigns
   server.port: -1
 
-bq:
-  schema: campaigns
-  table: campaigns
+db:
+  image: postgres:latest
+  name: campaigns
+  init: init.sql

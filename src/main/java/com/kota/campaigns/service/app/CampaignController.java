@@ -1,23 +1,21 @@
 package com.kota.campaigns.service.app;
 
-import com.kota.campaigns.service.domain.Campaign;
-import com.kota.campaigns.service.infra.CampaignService;
-import io.micronaut.http.annotation.Controller;
-import io.micronaut.http.annotation.Get;
+import com.kota.campaigns.service.domain.dto.CTR;
+import com.kota.campaigns.service.domain.dto.ClickSummary;
+import com.kota.campaigns.service.domain.dto.DailyImpression;
+import io.micronaut.http.annotation.QueryValue;
+import io.reactivex.Flowable;
+import io.reactivex.Maybe;
 
-import javax.inject.Inject;
-import java.util.Optional;
+import javax.annotation.Nullable;
+import java.time.LocalDate;
 
-@Controller("/campaigns")
-public class CampaignController {
+public interface CampaignController {
 
-    @Inject
-    CampaignService service;
+    Maybe<ClickSummary> fetchSummary(String datasource, LocalDate from, LocalDate to);
 
-    @Get
-    public String ping() {
-        final Optional<Campaign> campaign = service.get(0L);
-        return String.valueOf(campaign.isPresent());
-    }
+    Flowable<CTR> fetchCTR(@Nullable @QueryValue String datasource, @Nullable @QueryValue String campaign);
+
+    Flowable<DailyImpression> fetchImpressions();
 
 }

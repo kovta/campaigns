@@ -5,3 +5,5 @@ micronaut:
 bq:
   schema: campaigns
   table: campaigns
+
+google.application.credentials: enabled
