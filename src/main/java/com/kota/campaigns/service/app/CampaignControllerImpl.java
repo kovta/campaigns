@@ -22,8 +22,9 @@ public class CampaignControllerImpl implements CampaignController {
     this.repository = repository;
   }
 
-  @Override
-  public Maybe<ClickSummary> fetchSummary(String datasource, LocalDate from, LocalDate to) {
+  @Get(uri = "/summary{?datasource,from,to}")
+  public Maybe<ClickSummary> fetchSummary(
+      @QueryValue String datasource, @QueryValue LocalDate from, @QueryValue LocalDate to) {
     return repository.getSummary(datasource, from, to);
   }
 
@@ -39,7 +40,7 @@ public class CampaignControllerImpl implements CampaignController {
     }
   }
 
-  @Override
+  @Get(uri = "/impressions")
   public Flowable<DailyImpression> fetchImpressions() {
     return repository.getDailyImpressions();
   }
