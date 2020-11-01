@@ -6,8 +6,23 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 
 @Introspected
-public record Campaign(
-    long id, LocalDate date, String datasource, String campaign, long clicks, long impressions) {
+public class Campaign {
+  long id;
+  LocalDate date;
+  String datasource;
+  String campaign;
+  long clicks;
+  long impressions;
+
+  public Campaign(
+      long id, LocalDate date, String datasource, String campaign, long clicks, long impressions) {
+    this.id = id;
+    this.date = date;
+    this.datasource = datasource;
+    this.campaign = campaign;
+    this.clicks = clicks;
+    this.impressions = impressions;
+  }
 
   public static Campaign build(RowResult result) {
     return new Campaign(

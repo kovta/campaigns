@@ -61,18 +61,18 @@ test {
 
 mainClassName = "com.kota.campaigns.service.Application"
 java {
-    sourceCompatibility = JavaVersion.toVersion('14')
-    targetCompatibility = JavaVersion.toVersion('14')
+    sourceCompatibility = JavaVersion.toVersion('11')
+    targetCompatibility = JavaVersion.toVersion('11')
 }
-tasks.withType(JavaCompile) {
-    options.compilerArgs += "--enable-preview"
-}
-tasks.withType(Test) {
-    jvmArgs += "--enable-preview"
-}
-tasks.withType(JavaExec) {
-    jvmArgs += "--enable-preview"
-}
+//tasks.withType(JavaCompile) {
+//    options.compilerArgs += "--enable-preview"
+//}
+//tasks.withType(Test) {
+//    jvmArgs += "--enable-preview"
+//}
+//tasks.withType(JavaExec) {
+//    jvmArgs += "--enable-preview"
+//}
 nativeImage {
     args('--verbose')
     imageName('campaigns-data-svc')

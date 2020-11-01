@@ -32,13 +32,7 @@ public class CampaignRepositoryImpl implements CampaignRepository {
   public Maybe<Campaign> getById(long id) {
     return bq.query(
             Collections.singletonMap("id", id),
-            String.format(
-                """
-                SELECT *
-                FROM %s.%s
-                WHERE id = @id
-                """,
-                schema, table),
+            String.format("SELECT * FROM %s.%s WHERE id = @id ", schema, table),
             Campaign::build)
         .singleElement();
   }
@@ -47,10 +41,7 @@ public class CampaignRepositoryImpl implements CampaignRepository {
     return bq.query(
         Collections.emptyMap(),
         String.format(
-            """
-                SELECT SUM(clicks) / SUM(impressions) as ctr, datasource, campaign
-                FROM %s.%s
-                GROUP BY datasource, campaign""",
+            "SELECT SUM(clicks) / SUM(impressions) as ctr, datasource, campaign FROM %s.%s GROUP BY datasource, campaign",
             schema, table),
         CTR::build);
   }
@@ -59,11 +50,7 @@ public class CampaignRepositoryImpl implements CampaignRepository {
     return bq.query(
         Map.of("datasource", datasource),
         String.format(
-            """
-                SELECT SUM(clicks) / SUM(impressions) as ctr, datasource
-                FROM %s.%s
-                WHERE datasource = @datasource
-                GROUP BY datasource""",
+            "SELECT SUM(clicks) / SUM(impressions) as ctr, datasource FROM %s.%s WHERE datasource = @ GROUP BY datasource",
             schema, table),
         CTR::build);
   }
@@ -72,11 +59,7 @@ public class CampaignRepositoryImpl implements CampaignRepository {
     return bq.query(
         Map.of("datasource", datasource, "campaign", campaign),
         String.format(
-            """
-                SELECT SUM(clicks) / SUM(impressions) as ctr, datasource, campaign
-                FROM %s.%s
-                WHERE datasource = @datasource AND campaign = @campaign
-                GROUP BY datasource, campaign""",
+            "SELECT SUM(clicks) / SUM(impressions) as ctr, datasource, campaign FROM %s.%s WHERE datasource = @datasource AND campaign = @campaign GROUP BY datasource, campaign",
             schema, table),
         CTR::build);
   }
@@ -85,11 +68,7 @@ public class CampaignRepositoryImpl implements CampaignRepository {
     return bq.query(
             Map.of("datasource", datasource, "from", from, "to", to),
             String.format(
-                """
-                SELECT SUM(clicks) as clicks, datasource
-                FROM %s.%s
-                WHERE datasource = @datasource AND date BETWEEN @from AND @to
-                GROUP BY datasource""",
+                "SELECT SUM(clicks) as clicks, datasource FROM %s.%s WHERE datasource = @datasource AND date BETWEEN @from AND @to GROUP BY datasource",
                 schema, table),
             ClickSummary::build)
         .singleElement();
@@ -98,12 +77,7 @@ public class CampaignRepositoryImpl implements CampaignRepository {
   public Flowable<Campaign> getImpressions(String campaign) {
     return bq.query(
         Collections.singletonMap("campaign", campaign),
-        String.format(
-            """
-                SELECT *
-                FROM %s.%s
-                WHERE campaign = @campaign""",
-            schema, table),
+        String.format("SELECT * FROM %s.%s WHERE campaign = @campaign", schema, table),
         Campaign::build);
   }
 
@@ -111,11 +85,7 @@ public class CampaignRepositoryImpl implements CampaignRepository {
     return bq.query(
         Collections.emptyMap(),
         String.format(
-            """
-                        SELECT SUM(impressions) as impressions, date
-                        FROM %s.%s
-                        group by date""",
-            schema, table),
+            "SELECT SUM(impressions) as impressions, date FROM %s.%s group by date", schema, table),
         DailyImpression::build);
   }
 }
