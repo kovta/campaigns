@@ -8,11 +8,10 @@ import com.kota.campaigns.service.domain.entity.Campaign;
 import io.micronaut.context.annotation.Value;
 import io.reactivex.Flowable;
 import io.reactivex.Maybe;
-
-import javax.inject.Singleton;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Map;
+import javax.inject.Singleton;
 
 @Singleton
 public class CampaignRepositoryImpl implements CampaignRepository {
@@ -32,15 +31,16 @@ public class CampaignRepositoryImpl implements CampaignRepository {
 
   public Maybe<Campaign> getById(long id) {
     return bq.query(
-        Collections.singletonMap("id", id),
-        String.format(
-            """
+            Collections.singletonMap("id", id),
+            String.format(
+                """
                 SELECT *
                 FROM %s.%s
                 WHERE id = @id
                 """,
-            schema, table),
-        Campaign::build).singleElement();
+                schema, table),
+            Campaign::build)
+        .singleElement();
   }
 
   public Flowable<CTR> getCTR() {
@@ -83,15 +83,16 @@ public class CampaignRepositoryImpl implements CampaignRepository {
 
   public Maybe<ClickSummary> getSummary(String datasource, LocalDate from, LocalDate to) {
     return bq.query(
-        Map.of("datasource", datasource, "from", from, "to", to),
-        String.format(
-            """
+            Map.of("datasource", datasource, "from", from, "to", to),
+            String.format(
+                """
                 SELECT SUM(clicks) as clicks, datasource
                 FROM %s.%s
                 WHERE datasource = @datasource AND date BETWEEN @from AND @to
                 GROUP BY datasource""",
-            schema, table),
-        ClickSummary::build).singleElement();
+                schema, table),
+            ClickSummary::build)
+        .singleElement();
   }
 
   public Flowable<Campaign> getImpressions(String campaign) {
@@ -108,13 +109,13 @@ public class CampaignRepositoryImpl implements CampaignRepository {
 
   public Flowable<DailyImpression> getDailyImpressions() {
     return bq.query(
-            Collections.emptyMap(),
-            String.format(
-                    """
+        Collections.emptyMap(),
+        String.format(
+            """
                         SELECT SUM(impressions) as impressions, date
                         FROM %s.%s
                         group by date""",
-                    schema, table),
-            DailyImpression::build);
+            schema, table),
+        DailyImpression::build);
   }
 }

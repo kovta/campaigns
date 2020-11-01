@@ -71,7 +71,10 @@ tasks.withType(Test) {
 tasks.withType(JavaExec) {
     jvmArgs += "--enable-preview"
 }
-//compileJava.dependsOn tasks.openApiGenerate
+nativeImage {
+    args('--verbose')
+    imageName('campaigns-data-svc')
+}
 
 spotless {
     java {

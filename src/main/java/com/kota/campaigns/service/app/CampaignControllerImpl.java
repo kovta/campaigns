@@ -10,9 +10,8 @@ import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.QueryValue;
 import io.reactivex.Flowable;
 import io.reactivex.Maybe;
-
-import javax.annotation.Nullable;
 import java.time.LocalDate;
+import javax.annotation.Nullable;
 
 @Controller("/campaigns")
 public class CampaignControllerImpl implements CampaignController {
@@ -28,8 +27,9 @@ public class CampaignControllerImpl implements CampaignController {
     return repository.getSummary(datasource, from, to);
   }
 
-  @Get(uri = "/ctr{?datasource,?campaign}")
-  public Flowable<CTR> fetchCTR(@Nullable @QueryValue String datasource, @Nullable @QueryValue String campaign) {
+  @Get(uri = "/ctr{?datasource,campaign}")
+  public Flowable<CTR> fetchCTR(
+      @Nullable @QueryValue String datasource, @Nullable @QueryValue String campaign) {
     if (!Strings.isNullOrEmpty(datasource) && !Strings.isNullOrEmpty(campaign)) {
       return repository.getCTR(datasource, campaign);
     } else if (!Strings.isNullOrEmpty(datasource)) {

@@ -6,7 +6,6 @@ import com.kota.campaigns.service.domain.dto.DailyImpression;
 import com.kota.campaigns.service.domain.entity.Campaign;
 import io.reactivex.Flowable;
 import io.reactivex.Maybe;
-
 import java.time.LocalDate;
 
 public interface CampaignRepository {
